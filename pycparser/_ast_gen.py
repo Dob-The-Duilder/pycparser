@@ -244,7 +244,7 @@ class Node(object):
                 displayed.
 
             indent:
-                Spaces and lines to be displayed behind node.
+                Spaces and verticle lines to be displayed infront of node.
 
             islast:
                 Denotes if node is final element in its tree.
@@ -271,14 +271,8 @@ class Node(object):
         buf.write('\n')
 
         indent += "  " if islast else "│ "
-        
-        lastChild = None
-        
-        children = self.children()
-        if len(children) > 0:
-            _, lastChild = children[-1]
-            
-        for (child_name, child) in self.children():
+                    
+        for idx, (child_name, child) in enumerate(self.children()):
             child.show(
                 buf,
                 attrnames=attrnames,
@@ -286,7 +280,7 @@ class Node(object):
                 showcoord=showcoord,
                 _my_node_name=child_name,
                 indent=indent,
-                islast=(lastChild == child))
+                islast=(idx == len(self.children())-1))
 
 
 class NodeVisitor(object):
